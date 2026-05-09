@@ -87,33 +87,33 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="mailto:contact@gmtconsulting.in" className="text-sm text-muted-foreground transition-colors hover:text-[#03499e]">
-                  contact@gmtconsulting.in
-                </a>
+<a href="mailto:head.gmtconsulting@gmail.com" className="text-sm text-muted-foreground transition-colors hover:text-[#03499e]">
+                   head.gmtconsulting@gmail.com
+                 </a>
               </li>
             </ul>
             <div className="mt-6 flex gap-4">
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-4 w-4" />
-              </a>
-              <a
-                href="mailto:contact@gmtconsulting.in"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
-                aria-label="Email"
-              >
-                <Mail className="h-4 w-4" />
-              </a>
+<a
+                 href="https://www.linkedin.com/company/gmt-consulting-llp/about/?viewAsMember=true"
+                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
+                 aria-label="LinkedIn"
+               >
+                 <Linkedin className="h-4 w-4" />
+               </a>
+               <a
+                 href="#"
+                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
+                 aria-label="Twitter"
+               >
+                 <Twitter className="h-4 w-4" />
+               </a>
+               <a
+                 href="mailto:head.gmtconsulting@gmail.com"
+                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
+                 aria-label="Email"
+               >
+                 <Mail className="h-4 w-4" />
+               </a>
             </div>
           </div>
         </div>

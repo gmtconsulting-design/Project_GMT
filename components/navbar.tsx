@@ -34,13 +34,13 @@ export function Navbar() {
     {/* Top Bar */}
     <div className="hidden w-full bg-[#03499e] text-white md:block">
       <div className="mx-auto flex h-8 max-w-7xl items-center justify-end gap-6 px-4 text-xs sm:px-6 lg:px-8">
-        <a href="tel:+919821480971" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+        <a href="tel:+919372080019" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
           <Phone className="h-3 w-3" />
-          <span>+91 9821480971</span>
+          <span>+91 9372080019</span>
         </a>
-        <a href="mailto:enquiry@custom.com" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+        <a href="mailto:head.gmtconsulting@gmail.com" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
           <Mail className="h-3 w-3" />
-          <span>enquiry@custom.com</span>
+          <span>head.gmtconsulting@gmail.com</span>
         </a>
       </div>
     </div>

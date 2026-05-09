@@ -1,31 +1,33 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo, memo } from "react"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Mail, Phone, MapPin, CheckCircle, Loader2, Send } from "lucide-react"
 
-const contactInfo = [
-  {
-    icon: Mail,
-    title: "Email",
-    value: "head.gmtconsulting@gmail.com",
-    description: "Send us an email anytime",
-  },
-  {
-    icon: Phone,
-    title: "Phone",
-    value: "+91 98765 43210",
-    description: "Mon-Fri from 9am to 6pm",
-  },
-  {
-    icon: MapPin,
-    title: "Office",
-    value: "Mumbai, Maharashtra, India",
-    description: "Visit our headquarters",
-  },
-]
+const useContactInfo = () => {
+  return useMemo(() => [
+    {
+      icon: Mail,
+      title: "Email",
+      value: "head.gmtconsulting@gmail.com",
+      description: "Send us an email anytime",
+    },
+    {
+      icon: Phone,
+      title: "Phone",
+      value: "9372080019",
+      description: "Mon-Fri from 9am to 6pm",
+    },
+    {
+      icon: MapPin,
+      title: "Office",
+      value: "Mumbai, Maharashtra, India",
+      description: "Visit our headquarters",
+    },
+  ], [])
+}
 
 const services = [
   "ERP Selection & Evaluation",
@@ -38,8 +40,9 @@ const services = [
   "Other",
 ]
 
-export function ContactForm() {
-  const [formData, setFormData] = useState({
+export const ContactForm = memo(function ContactForm() {
+  const contactInfo = useContactInfo()
+   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -401,7 +404,7 @@ export function ContactForm() {
         </div>
       </section>
 
-      <Footer />
+<Footer />
     </main>
   )
-}
+})
