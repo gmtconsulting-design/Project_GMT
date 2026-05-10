@@ -5,6 +5,9 @@ import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Mail, Phone, MapPin, CheckCircle, Loader2, Send } from "lucide-react"
+import { validateEmail } from "@/lib/validate-email"
+import { validatePhone } from "@/lib/validate-phone"
+import { validateMessageLength } from "@/lib/validate-message-length"
 
 const useContactInfo = () => {
   return useMemo(() => [
@@ -72,21 +75,16 @@ export const ContactForm = memo(function ContactForm() {
       newErrors.lastName = "Last name can only contain letters"
     }
 
-    // Email validation
-    if (!formData.email.trim()) {
-      newErrors.email = "Email address is required"
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address"
+    // Email validation using validateEmail
+    const emailResult = validateEmail(formData.email)
+    if (!emailResult.valid) {
+      newErrors.email = emailResult.error!
     }
 
-    // Phone validation - exactly 10 digits
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required"
-    } else {
-      const phoneDigits = formData.phone.replace(/\D/g, '')
-      if (phoneDigits.length !== 10) {
-        newErrors.phone = "Phone number must be exactly 10 digits"
-      }
+    // Phone validation using validatePhone
+    const phoneResult = validatePhone(formData.phone)
+    if (!phoneResult.valid) {
+      newErrors.phone = phoneResult.error!
     }
 
     // Service validation
@@ -94,15 +92,59 @@ export const ContactForm = memo(function ContactForm() {
       newErrors.service = "Please select a service"
     }
 
-    // Message validation
-    if (!formData.message.trim()) {
-      newErrors.message = "Message is required"
-    } else if (formData.message.trim().length < 20) {
-      newErrors.message = "Message must be at least 20 characters"
+    // Message validation using validateMessageLength
+    const messageResult = validateMessageLength(formData.message)
+    if (!messageResult.valid) {
+      newErrors.message = messageResult.error!
     }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
+  }
+
+  const validateField = (name: string, value: string) => {
+    let error: string | undefined
+
+    switch (name) {
+      case "firstName":
+        if (!value.trim()) {
+          error = "First name is required"
+        } else if (!/^[a-zA-Z\s'-]+$/.test(value.trim())) {
+          error = "First name can only contain letters"
+        }
+        break
+
+      case "lastName":
+        if (!value.trim()) {
+          error = "Last name is required"
+        } else if (!/^[a-zA-Z\s'-]+$/.test(value.trim())) {
+          error = "Last name can only contain letters"
+        }
+        break
+
+      case "email": {
+        const result = validateEmail(value)
+        if (!result.valid) error = result.error
+        break
+      }
+
+      case "phone": {
+        const result = validatePhone(value)
+        if (!result.valid) error = result.error
+        break
+      }
+
+      case "message": {
+        const result = validateMessageLength(value)
+        if (!result.valid) error = result.error
+        break
+      }
+    }
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error ?? "",
+    }))
   }
 
    const handleSubmit = async (e: React.FormEvent) => {
@@ -151,9 +193,12 @@ export const ContactForm = memo(function ContactForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }))
-    }
+    validateField(name, value)
+  }
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    validateField(name, value)
   }
 
   return (
@@ -253,6 +298,7 @@ export const ContactForm = memo(function ContactForm() {
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         className={`mt-2 block w-full rounded-lg border ${errors.firstName ? 'border-red-500' : 'border-border'} bg-background px-4 py-2.5 text-foreground focus:border-[#03499e] focus:outline-none focus:ring-1 focus:ring-[#03499e]`}
                         placeholder="John"
                       />
@@ -270,6 +316,7 @@ export const ContactForm = memo(function ContactForm() {
                         name="lastName"
                         value={formData.lastName}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         className={`mt-2 block w-full rounded-lg border ${errors.lastName ? 'border-red-500' : 'border-border'} bg-background px-4 py-2.5 text-foreground focus:border-[#03499e] focus:outline-none focus:ring-1 focus:ring-[#03499e]`}
                         placeholder="Doe"
                       />
@@ -290,6 +337,7 @@ export const ContactForm = memo(function ContactForm() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         className={`mt-2 block w-full rounded-lg border ${errors.email ? 'border-red-500' : 'border-border'} bg-background px-4 py-2.5 text-foreground focus:border-[#03499e] focus:outline-none focus:ring-1 focus:ring-[#03499e]`}
                         placeholder="john@company.com"
                       />
@@ -307,6 +355,7 @@ export const ContactForm = memo(function ContactForm() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         className={`mt-2 block w-full rounded-lg border ${errors.phone ? 'border-red-500' : 'border-border'} bg-background px-4 py-2.5 text-foreground focus:border-[#03499e] focus:outline-none focus:ring-1 focus:ring-[#03499e]`}
                         placeholder="+91 98765 43210"
                       />
@@ -317,7 +366,7 @@ export const ContactForm = memo(function ContactForm() {
                   </div>
 
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
+<div>
                       <label htmlFor="company" className="block text-sm font-medium text-foreground">
                         Company Name
                       </label>
@@ -327,6 +376,7 @@ export const ContactForm = memo(function ContactForm() {
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         className="mt-2 block w-full rounded-lg border border-border bg-background px-4 py-2.5 text-foreground focus:border-[#03499e] focus:outline-none focus:ring-1 focus:ring-[#03499e]"
                         placeholder="Your Company"
                       />
@@ -340,6 +390,7 @@ export const ContactForm = memo(function ContactForm() {
                         name="service"
                         value={formData.service}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         className={`mt-2 block w-full rounded-lg border ${errors.service ? 'border-red-500' : 'border-border'} bg-background px-4 py-2.5 text-foreground focus:border-[#03499e] focus:outline-none focus:ring-1 focus:ring-[#03499e]`}
                       >
                         <option value="">Select a service</option>
@@ -365,6 +416,7 @@ export const ContactForm = memo(function ContactForm() {
                       rows={5}
                       value={formData.message}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       className={`mt-2 block w-full rounded-lg border ${errors.message ? 'border-red-500' : 'border-border'} bg-background px-4 py-2.5 text-foreground focus:border-[#03499e] focus:outline-none focus:ring-1 focus:ring-[#03499e]`}
                       placeholder="Tell us about your ERP, CRM, or HRMS requirements..."
                     />
