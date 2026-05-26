@@ -1,0 +1,17 @@
+version: 1
+applications:
+  - frontend:
+      appRoot: "/"
+      artifacts:
+        baseDirectory: ".next/standalone"
+        files:
+          - "**/*"
+      buildCommand: "pnpm run build"
+      installCommand: "pnpm install"
+      startCommand: "pnpm start"
+      cacheDependencies:
+        - pnpm-lock.yaml
+      customRules:
+        - source: "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|eot|map|json)$)([^.]+$)/>"
+          target: "/index.html"
+          status: "406"
