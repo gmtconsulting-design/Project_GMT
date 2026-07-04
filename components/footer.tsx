@@ -93,11 +93,13 @@ export function Footer() {
               </li>
             </ul>
             <div className="mt-6 flex gap-4">
-<a
-                 href="https://www.linkedin.com/company/gmt-consulting-llp/about/?viewAsMember=true"
-                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
-                 aria-label="LinkedIn"
-               >
+                <a
+                  href="https://www.linkedin.com/company/gmt-consulting-llp/about/?viewAsMember=true"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
+                  aria-label="LinkedIn"
+                >
                  <Linkedin className="h-4 w-4" />
                </a>
                <a
