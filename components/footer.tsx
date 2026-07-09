@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Linkedin, Twitter, Mail } from "lucide-react"
+import { Linkedin, Mail, Instagram, Facebook } from "lucide-react"
 
 export function Footer() {
   return (
@@ -100,17 +100,28 @@ export function Footer() {
                   className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
                   aria-label="LinkedIn"
                 >
-                 <Linkedin className="h-4 w-4" />
-               </a>
-               <a
-                 href="#"
-                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
-                 aria-label="Twitter"
-               >
-                 <Twitter className="h-4 w-4" />
-               </a>
-               <a
-                 href="mailto:head.gmtconsulting@gmail.com"
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://www.instagram.com/gmt_consulting_llp?igsh=c2dmdnZncmJqYTNv&utm_source=qr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://www.facebook.com/GMTConsultingLLP"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="h-4 w-4" />
+                </a>
+                <a
+                  href="mailto:head.gmtconsulting@gmail.com"
                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary text-secondary-foreground transition-colors hover:bg-[#03499e] hover:text-white"
                  aria-label="Email"
                >
